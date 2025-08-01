@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Wellenlänge</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #app {
+      background: white;
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin: 5px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .green {
+      background: #4CAF50;
+      color: white;
+    }
+    .green:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="startScreen">
+      <h2>Spieler eingeben</h2>
+      <div id="playerInputs">
+        <input type="text" placeholder="Spieler 1">
+      </div>
+      <button id="addPlayerBtn">+ Spieler hinzufügen</button>
+      <button class="green" id="startBtn">Weiter</button>
+    </div>
+
+    <div id="targetScreen" style="display: none;">
+      <h2 id="startingPlayer"></h2>
+      <p>Zielwert: <strong id="targetValueDisplay"></strong></p>
+      <button class="green" id="toRoundBtn">Weiter</button>
+    </div>
+
+    <div id="roundScreen" style="display: none;">
+      <h2 id="roundCounter"></h2>
+      <p id="categoryDisplay">Kategorie: ...</p>
+      <button id="shuffleBtn">🔀</button>
+      <button class="green" id="nextRoundBtn">Weiter</button>
+    </div>
+
+    <div id="solutionScreen" style="display: none;">
+      <h2>Zahl erraten</h2>
+      <select id="guessSelect">
+        <option value="" disabled selected>Wähle eine Zahl</option>
+        <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+        <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+      </select>
+      <button class="green" id="solveBtn">Lösen</button>
+    </div>
+
+    <div id="resultScreen" style="display: none;">
+      <h2 id="resultText"></h2>
+      <p>Richtiger Wert: <strong id="correctValue"></strong></p>
+      <button class="green" id="restartBtn">Neue Spielrunde</button>
+    </div>
+  </div>
+
+  <!-- Kategorien -->
+  <script src="categories.js"></script>
+
+  <!-- Hauptlogik -->
+  <script>
+    let players = [];
+    let currentRound = 0;
+    const maxRounds = 4;
+    let targetValue = 0;
+    let startingPlayer = "";
+
+    window.onload = function () {
+      document.getElementById('addPlayerBtn').onclick = addPlayer;
+      document.getElementById('startBtn').onclick = startGame;
+      document.getElementById('toRoundBtn').onclick = nextRound;
+      document.getElementById('shuffleBtn').onclick = shuffleCategory;
+      document.getElementById('nextRoundBtn').onclick = nextRound;
+      document.getElementById('solveBtn').onclick = checkSolution;
+      document.getElementById('restartBtn').onclick = restartGame;
+    };
+
+    function addPlayer() {
+      const container = document.getElementById('playerInputs');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = `Spieler ${container.children.length + 1}`;
+      container.appendChild(input);
+    }
+
+    function startGame() {
+      players = Array.from(document.querySelectorAll('#playerInputs input'))
+        .map(input => input.value.trim())
+        .filter(name => name !== "");
+
+      if (players.length < 2) {
+        alert("Mindestens zwei Spieler eingeben!");
+        return;
+      }
+
+      targetValue = Math.floor(Math.random() * 11);
+      startingPlayer = players[Math.floor(Math.random() * players.length)];
+
+      document.getElementById('startingPlayer').innerText = `${startingPlayer} beginnt`;
+      document.getElementById('targetValueDisplay').innerText = targetValue;
+
+      document.getElementById('startScreen').style.display = "none";
+      document.getElementById('targetScreen').style.display = "block";
+    }
+
+    function nextRound() {
+      if (document.getElementById('targetScreen').style.display === "block") {
+        document.getElementById('targetScreen').style.display = "none";
+        showRound();
+      } else if (currentRound < maxRounds) {
+        showRound();
+      } else {
+        document.getElementById('roundScreen').style.display = "none";
+        document.getElementById('solutionScreen').style.display = "block";
+      }
+    }
+
+    function showRound() {
+      currentRound++;
+      document.getElementById('roundCounter').innerText = `Runde ${currentRound}`;
+      shuffleCategory();
+      document.getElementById('roundScreen').style.display = "block";
+    }
+
+    function shuffleCategory() {
+      const index = Math.floor(Math.random() * categories.length);
+      document.getElementById('categoryDisplay').innerText = "Kategorie: " + categories[index];
+    }
+
+    function checkSolution() {
+      const guess = parseInt(document.getElementById('guessSelect').value);
+      if (isNaN(guess)) {
+        alert("Bitte eine Zahl auswählen!");
+        return;
+      }
+
+      const resultText = (guess === targetValue)
+        ? "Treffer! Ihr seid auf Wellenlänge!"
+        : "Leider daneben!";
+      const resultColor = (guess === targetValue) ? "#d4edda" : "#f8d7da";
+
+      document.getElementById('resultText').innerText = resultText;
+      document.getElementById('correctValue').innerText = targetValue;
+      document.getElementById('solutionScreen').style.display = "none";
+      document.getElementById('resultScreen').style.display = "block";
+      document.getElementById('resultScreen').style.backgroundColor = resultColor;
+    }
+
+    function restartGame() {
+      currentRound = 0;
+      targetValue = 0;
+      startingPlayer = "";
+      document.getElementById('resultScreen').style.backgroundColor = "white";
+      document.getElementById('resultScreen').style.display = "none";
+      document.getElementById('startScreen').style.display = "block";
+    }
+  </script>
+</body>
+</html>
