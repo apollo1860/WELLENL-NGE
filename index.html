@@ -43,10 +43,16 @@
     .green:hover {
       background: #45a049;
     }
+    .note {
+      font-size: 0.9em;
+      color: #555;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
   <div id="app">
+    <!-- Startscreen -->
     <div id="startScreen">
       <h2>Spieler eingeben</h2>
       <div id="playerInputs">
@@ -56,19 +62,31 @@
       <button class="green" id="startBtn">Weiter</button>
     </div>
 
+    <!-- Wer beginnt + wer antwortet -->
+    <div id="whoStartsScreen" style="display: none;">
+      <h2>Wer beginnt?</h2>
+      <p id="startingPlayerText"></p>
+      <p id="answeringPlayerText" style="margin-top: 10px; color: #555;"></p>
+      <button class="green" id="showTargetBtn">Weiter</button>
+    </div>
+
+    <!-- Zielwertanzeige -->
     <div id="targetScreen" style="display: none;">
-      <h2 id="startingPlayer"></h2>
+      <h2>Geheimer Zielwert</h2>
       <p>Zielwert: <strong id="targetValueDisplay"></strong></p>
       <button class="green" id="toRoundBtn">Weiter</button>
     </div>
 
+    <!-- Rundenanzeige -->
     <div id="roundScreen" style="display: none;">
       <h2 id="roundCounter"></h2>
       <p id="categoryDisplay">Kategorie: ...</p>
       <button id="shuffleBtn">🔀</button>
+      <p class="note">…oder deine eigene Kategorie!</p>
       <button class="green" id="nextRoundBtn">Weiter</button>
     </div>
 
+    <!-- Lösung -->
     <div id="solutionScreen" style="display: none;">
       <h2>Zahl erraten</h2>
       <select id="guessSelect">
@@ -79,6 +97,7 @@
       <button class="green" id="solveBtn">Lösen</button>
     </div>
 
+    <!-- Ergebnis -->
     <div id="resultScreen" style="display: none;">
       <h2 id="resultText"></h2>
       <p>Richtiger Wert: <strong id="correctValue"></strong></p>
@@ -86,20 +105,21 @@
     </div>
   </div>
 
-  <!-- Kategorien -->
+  <!-- Kategorien aus externer Datei -->
   <script src="categories.js"></script>
 
-  <!-- Hauptlogik -->
   <script>
     let players = [];
     let currentRound = 0;
     const maxRounds = 4;
     let targetValue = 0;
     let startingPlayer = "";
+    let answeringPlayer = "";
 
     window.onload = function () {
       document.getElementById('addPlayerBtn').onclick = addPlayer;
       document.getElementById('startBtn').onclick = startGame;
+      document.getElementById('showTargetBtn').onclick = showTargetValue;
       document.getElementById('toRoundBtn').onclick = nextRound;
       document.getElementById('shuffleBtn').onclick = shuffleCategory;
       document.getElementById('nextRoundBtn').onclick = nextRound;
@@ -126,13 +146,27 @@
       }
 
       targetValue = Math.floor(Math.random() * 11);
-      startingPlayer = players[Math.floor(Math.random() * players.length)];
 
-      document.getElementById('startingPlayer').innerText = `${startingPlayer} beginnt`;
-      document.getElementById('targetValueDisplay').innerText = targetValue;
+      // Zufälliger Startspieler + Antwortspieler (müssen unterschiedlich sein)
+      let startIndex = Math.floor(Math.random() * players.length);
+      startingPlayer = players[startIndex];
 
+      let remaining = players.filter((_, i) => i !== startIndex);
+      answeringPlayer = remaining[Math.floor(Math.random() * remaining.length)];
+
+      // Anzeige
+      document.getElementById('startingPlayerText').innerText = `${startingPlayer} beginnt!`;
+      document.getElementById('answeringPlayerText').innerText = `Antwortet: ${answeringPlayer}`;
+
+      // Slides wechseln
       document.getElementById('startScreen').style.display = "none";
+      document.getElementById('whoStartsScreen').style.display = "block";
+    }
+
+    function showTargetValue() {
+      document.getElementById('whoStartsScreen').style.display = "none";
       document.getElementById('targetScreen').style.display = "block";
+      document.getElementById('targetValueDisplay').innerText = targetValue;
     }
 
     function nextRound() {
@@ -155,6 +189,10 @@
     }
 
     function shuffleCategory() {
+      if (typeof categories === "undefined" || categories.length === 0) {
+        document.getElementById('categoryDisplay').innerText = "Kategorie: (keine Kategorien geladen)";
+        return;
+      }
       const index = Math.floor(Math.random() * categories.length);
       document.getElementById('categoryDisplay').innerText = "Kategorie: " + categories[index];
     }
@@ -182,6 +220,7 @@
       currentRound = 0;
       targetValue = 0;
       startingPlayer = "";
+      answeringPlayer = "";
       document.getElementById('resultScreen').style.backgroundColor = "white";
       document.getElementById('resultScreen').style.display = "none";
       document.getElementById('startScreen').style.display = "block";
