@@ -6,6 +6,7 @@ const categories = [
   "Nenne einen Politiker",
   "Nenne eine Biermarke",
   "Nenne ein Reisziel",
+  "Nenne ein Vereinswappen",
   "Nenne ein Schulfach",
   "Nenne eine Fortbewegungsart",
   "Nenne ein Jugendwort",
