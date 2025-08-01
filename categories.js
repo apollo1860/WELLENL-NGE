@@ -8,6 +8,7 @@ const categories = [
   "Nenne ein Reisziel",
   "Nenne ein Vereinswappen",
   "Nenne ein Schulfach",
+  "Nenne ein Körperteil nach Wichtigkeit",
   "Nenne eine Fortbewegungsart",
   "Nenne ein Jugendwort",
   "Nenne einen Fußballtransfer",
