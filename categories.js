@@ -10,6 +10,7 @@ const categories = [
   "Nenne ein Schulfach",
   "Nenne eine Fortbewegungsart",
   "Nenne ein Jugendwort",
+  "Nenne einen Fußballtransfer",
   "Nenne ein Fußballstadion",
   "Nenne ein soziales Netzwerk",
   "Nenne ein Videospiel",
