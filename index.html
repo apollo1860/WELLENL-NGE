@@ -2,51 +2,85 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wellenlänge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Poppins&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: sans-serif;
-      background: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
       margin: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
     }
+
     #app {
+      width: 100%;
+      max-width: 420px;
       background: white;
-      width: 90%;
-      max-width: 400px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      padding: 25px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       text-align: center;
+      overflow-y: auto;
+      max-height: 95vh;
     }
+
+    h2 {
+      font-family: 'Fredoka', sans-serif;
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
     input, select {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
       font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
     }
+
     button {
-      padding: 10px 15px;
+      padding: 12px 20px;
       font-size: 16px;
-      margin: 5px;
+      margin: 8px 5px;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 10px;
+      transition: transform 0.1s ease-in-out;
     }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
     .green {
-      background: #4CAF50;
+      background: #38b000;
       color: white;
     }
+
     .green:hover {
-      background: #45a049;
+      background: #2d9100;
     }
+
+    .neutral {
+      background: #e0e0e0;
+      color: #333;
+    }
+
     .note {
       font-size: 0.9em;
-      color: #555;
-      margin-top: 5px;
+      color: #666;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -58,7 +92,7 @@
       <div id="playerInputs">
         <input type="text" placeholder="Spieler 1">
       </div>
-      <button id="addPlayerBtn">+ Spieler hinzufügen</button>
+      <button id="addPlayerBtn" class="neutral">+ Spieler hinzufügen</button>
       <button class="green" id="startBtn">Weiter</button>
     </div>
 
@@ -66,14 +100,14 @@
     <div id="whoStartsScreen" style="display: none;">
       <h2>Wer beginnt?</h2>
       <p id="startingPlayerText"></p>
-      <p id="answeringPlayerText" style="margin-top: 10px; color: #555;"></p>
+      <p id="answeringPlayerText" class="note"></p>
       <button class="green" id="showTargetBtn">Weiter</button>
     </div>
 
     <!-- Zielwertanzeige -->
     <div id="targetScreen" style="display: none;">
       <h2>Geheimer Zielwert</h2>
-      <p>Zielwert: <strong id="targetValueDisplay"></strong></p>
+      <p style="font-size: 28px;">🎯 <strong id="targetValueDisplay"></strong></p>
       <button class="green" id="toRoundBtn">Weiter</button>
     </div>
 
@@ -81,7 +115,7 @@
     <div id="roundScreen" style="display: none;">
       <h2 id="roundCounter"></h2>
       <p id="categoryDisplay">Kategorie: ...</p>
-      <button id="shuffleBtn">🔀</button>
+      <button id="shuffleBtn" class="neutral">🔀 Neue Kategorie</button>
       <p class="note">…oder deine eigene Kategorie!</p>
       <button class="green" id="nextRoundBtn">Weiter</button>
     </div>
@@ -91,8 +125,7 @@
       <h2>Zahl erraten</h2>
       <select id="guessSelect">
         <option value="" disabled selected>Wähle eine Zahl</option>
-        <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
-        <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+        ${[...Array(11).keys()].map(i => `<option>${i}</option>`).join('')}
       </select>
       <button class="green" id="solveBtn">Lösen</button>
     </div>
@@ -105,7 +138,7 @@
     </div>
   </div>
 
-  <!-- Kategorien aus externer Datei -->
+  <!-- Kategorien (externe Datei) -->
   <script src="categories.js"></script>
 
   <script>
@@ -147,18 +180,15 @@
 
       targetValue = Math.floor(Math.random() * 11);
 
-      // Zufälliger Startspieler + Antwortspieler (müssen unterschiedlich sein)
       let startIndex = Math.floor(Math.random() * players.length);
       startingPlayer = players[startIndex];
 
       let remaining = players.filter((_, i) => i !== startIndex);
       answeringPlayer = remaining[Math.floor(Math.random() * remaining.length)];
 
-      // Anzeige
       document.getElementById('startingPlayerText').innerText = `${startingPlayer} beginnt!`;
       document.getElementById('answeringPlayerText').innerText = `Antwortet: ${answeringPlayer}`;
 
-      // Slides wechseln
       document.getElementById('startScreen').style.display = "none";
       document.getElementById('whoStartsScreen').style.display = "block";
     }
@@ -189,8 +219,8 @@
     }
 
     function shuffleCategory() {
-      if (typeof categories === "undefined" || categories.length === 0) {
-        document.getElementById('categoryDisplay').innerText = "Kategorie: (keine Kategorien geladen)";
+      if (!categories || categories.length === 0) {
+        document.getElementById('categoryDisplay').innerText = "Keine Kategorien geladen.";
         return;
       }
       const index = Math.floor(Math.random() * categories.length);
@@ -205,8 +235,8 @@
       }
 
       const resultText = (guess === targetValue)
-        ? "Treffer! Ihr seid auf Wellenlänge!"
-        : "Leider daneben!";
+        ? "Treffer! Ihr seid auf Wellenlänge! 🎉"
+        : "Leider daneben! 😬";
       const resultColor = (guess === targetValue) ? "#d4edda" : "#f8d7da";
 
       document.getElementById('resultText').innerText = resultText;
