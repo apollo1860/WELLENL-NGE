@@ -9,6 +9,8 @@ const categories = [
     "Nenne einen Shampoo-Duft",
   "Nenne einen Fußball-Verein",
   "Nenne ein Verhütungsmittel",
+  "Nenne eine Akku-Prozentzahl",
+  "Nenne eine Trinkeld-Prozentzahl",
   "Nenne ein Magazin",
   "Nenne einen US-Präsidenten",
   "Nenne einen Künstler",
