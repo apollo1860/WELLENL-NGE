@@ -14,6 +14,8 @@ const categories = [
   "Nenne ein Duty-Free-Produkt am Flughafen",
   "Nenne einen Flughafen",
   "Nenne einen Politiker",
+  "Nenne einen Bart-Stil",
+  "Nenne ein Eis am Stiel",
   "Nenne eine Biermarke",
   "Nenne ein Reisziel",
   "Nenne ein Vereinswappen",
