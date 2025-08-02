@@ -1,6 +1,12 @@
 // Diese Datei enthält die Kategorien für das Spiel "Wellenlänge"
 const categories = [
     "Nenne eine Porno-Kategorie",
+    "Nenne eine Bestrafung in der Schule",
+    "Nenne eine Ausrede, warum man seine Hausaufgaben vergessen hat",
+    "Nenne einen Grund, warum man nicht für eine Prüfung gelernt hat",
+    "Nenne eine Straftat/Ordnungswidrigkeit",
+    "Nenne eine Ausrede, warum man zu spät zum Unterricht kommt",
+    "Nenne einen Shampoo-Duft",
   "Nenne einen Fußball-Verein",
   "Nenne eine politische Partei",
   "Nenne einen Politiker",
