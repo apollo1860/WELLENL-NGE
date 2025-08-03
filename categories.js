@@ -15,6 +15,8 @@ const categories = [
     "Nenne einen TikTok-Trend",
     "Nenne eine Kaugummi-Geschmackssorte",
     "Nenne eine Website",
+    "Nenne einen Little Brittain Charakter",
+    "Nenne ein Wort zum Buchstabieren",
     "Nenne eine Kaffee-Sorte",
     "Nenne einen Gegenstand, den man in den Urlaub mitnimmt",
     "Nenne eine Regel aus dem Sport",
