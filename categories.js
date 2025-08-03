@@ -7,6 +7,8 @@ const categories = [
     "Nenne eine Straftat/Ordnungswidrigkeit",
     "Nenne eine Ausrede, warum man zu spät kommt",
     "Nenne einen Shampoo-Duft",
+    "Nenne ein Land, um im Gefängnis zu landen",
+    "Nenne eine Mahlzeit am Abend als Kind mit deinen Eltern",
     "Nenne eine Haushaltspflicht",
     "Nenne ein Buch zum Lesen",
     "Nenne ein Muttertagsgeschenk",
