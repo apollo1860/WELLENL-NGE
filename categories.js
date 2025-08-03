@@ -9,6 +9,8 @@ const categories = [
     "Nenne einen Charakter aus The Big Bang Theory",
     "Nenne einen Charakter aus Brooklyn 99",
     "Nenne eine Comicfigur",
+    "Nenne ein Spiel auf dem Pausenhof",
+    "Nenne eine Super RTL/KIKA Serie",
     "Nenne einen Family Guy Charakter",
     "Nenne eine Haribosorte",
     "Nenne eine Schokoladen-Sorte",
