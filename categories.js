@@ -12,6 +12,7 @@ const categories = [
     "Nenne eine Mahlzeit am Abend als Kind mit deinen Eltern",
     "Nenne eine Haushaltspflicht",
     "Nenne ein Buch zum Lesen",
+    "Nenne ein Volksfest",
     "Nenne ein Muttertagsgeschenk",
     "Nenne ein Vatertagsgeschenk",
     "Nenne eine Anstoßzeit beim Fußball",
