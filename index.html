@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Wellenlänge</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Poppins&display=swap" rel="stylesheet">
   <style>
@@ -105,13 +105,13 @@
     <div id="startScreen">
       <h2>Spieler eingeben</h2>
       <div id="playerInputs">
-        <input type="text" placeholder="Spieler 1">
+        <input type="text" placeholder="Spieler 1" />
       </div>
       <button id="addPlayerBtn" class="neutral">+ Spieler hinzufügen</button>
       <button class="green" id="startBtn">Weiter</button>
     </div>
 
-    <!-- Allgemeiner Hinweis -->
+    <!-- Wer beginnt -->
     <div id="whoStartsScreen" style="display: none;">
       <h2>Los geht’s!</h2>
       <p class="note">Einigt euch, wer beginnt und wer rät.</p>
@@ -155,7 +155,7 @@
     </div>
   </div>
 
-  <!-- Kategorien-Auslagerung -->
+  <!-- Kategorien auslagern -->
   <script src="categories.js"></script>
 
   <script>
@@ -238,8 +238,8 @@
         const textarea = document.createElement('textarea');
         textarea.placeholder = `Notiz zu Runde ${i + 1}`;
         textarea.id = `note-${i}`;
-        textarea.value = notes[i]; // gespeicherter Text
-        textarea.disabled = (i + 1 < currentRound); // ältere Runden sperren
+        textarea.value = notes[i];
+        textarea.disabled = (i + 1 < currentRound);
 
         textarea.addEventListener("input", (e) => {
           notes[i] = e.target.value;
@@ -282,6 +282,8 @@
     function restartGame() {
       currentRound = 0;
       targetValue = Math.floor(Math.random() * 11);
+      notes = ["", "", "", ""]; // ← Notizen werden gelöscht
+
       document.getElementById('resultScreen').style.backgroundColor = "white";
       document.getElementById('resultScreen').style.display = "none";
       document.getElementById('whoStartsScreen').style.display = "block";
