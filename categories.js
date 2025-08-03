@@ -11,6 +11,7 @@ const categories = [
     "Nenne eine Straftat/Ordnungswidrigkeit",
     "Nenne eine Ausrede, warum man zu spät kommt",
     "Nenne einen Shampoo-Duft",
+    "Nenne einen Firmenbenefit",
     "Nenne einen Kosenamen",
     "Nenne eine historische Persönlichkeit",
     "Nenne einen Sänger, der mit DJ beginnt",
