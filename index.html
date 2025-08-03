@@ -40,13 +40,28 @@
       margin-bottom: 15px;
     }
 
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 12px;
       margin-bottom: 12px;
       font-size: 16px;
       border-radius: 10px;
       border: 1px solid #ccc;
+    }
+
+    textarea {
+      resize: none;
+      height: 60px;
+    }
+
+    .locked-note {
+      background: none;
+      border: none;
+      color: #222;
+      font-size: 13px;
+      text-align: left;
+      margin-bottom: 8px;
+      padding: 0;
     }
 
     button {
@@ -96,11 +111,10 @@
       <button class="green" id="startBtn">Weiter</button>
     </div>
 
-    <!-- Wer beginnt + wer antwortet -->
+    <!-- Allgemeiner Starthinweis -->
     <div id="whoStartsScreen" style="display: none;">
-      <h2>Wer beginnt?</h2>
-      <p id="startingPlayerText"></p>
-      <p id="answeringPlayerText" class="note"></p>
+      <h2>Los geht’s!</h2>
+      <p class="note">Einigt euch, wer beginnt und wer rät.</p>
       <button class="green" id="showTargetBtn">Weiter</button>
     </div>
 
@@ -117,6 +131,7 @@
       <p id="categoryDisplay">Kategorie: ...</p>
       <button id="shuffleBtn" class="neutral">🔀 Neue Kategorie</button>
       <p class="note">…oder deine eigene Kategorie!</p>
+      <div id="notesContainer"></div>
       <button class="green" id="nextRoundBtn">Weiter</button>
     </div>
 
@@ -128,6 +143,7 @@
         <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
         <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
       </select>
+      <div id="lockedNotes"></div>
       <button class="green" id="solveBtn">Lösen</button>
     </div>
 
@@ -139,16 +155,12 @@
     </div>
   </div>
 
-  <!-- Kategorien aus externer Datei -->
   <script src="categories.js"></script>
-
   <script>
     let players = [];
     let currentRound = 0;
     const maxRounds = 4;
     let targetValue = 0;
-    let startingPlayer = "";
-    let answeringPlayer = "";
 
     window.onload = function () {
       document.getElementById('addPlayerBtn').onclick = addPlayer;
@@ -180,16 +192,6 @@
       }
 
       targetValue = Math.floor(Math.random() * 11);
-
-      let startIndex = Math.floor(Math.random() * players.length);
-      startingPlayer = players[startIndex];
-
-      let remaining = players.filter((_, i) => i !== startIndex);
-      answeringPlayer = remaining[Math.floor(Math.random() * remaining.length)];
-
-      document.getElementById('startingPlayerText').innerText = `${startingPlayer} beginnt!`;
-      document.getElementById('answeringPlayerText').innerText = `Antwortet: ${answeringPlayer}`;
-
       document.getElementById('startScreen').style.display = "none";
       document.getElementById('whoStartsScreen').style.display = "block";
     }
@@ -208,6 +210,7 @@
         showRound();
       } else {
         document.getElementById('roundScreen').style.display = "none";
+        lockNotes();
         document.getElementById('solutionScreen').style.display = "block";
       }
     }
@@ -216,16 +219,37 @@
       currentRound++;
       document.getElementById('roundCounter').innerText = `Runde ${currentRound}`;
       shuffleCategory();
+      showNotes();
       document.getElementById('roundScreen').style.display = "block";
     }
 
     function shuffleCategory() {
-      if (!categories || categories.length === 0) {
-        document.getElementById('categoryDisplay').innerText = "Keine Kategorien geladen.";
-        return;
-      }
       const index = Math.floor(Math.random() * categories.length);
       document.getElementById('categoryDisplay').innerText = "Kategorie: " + categories[index];
+    }
+
+    function showNotes() {
+      const container = document.getElementById('notesContainer');
+      container.innerHTML = '';
+      for (let i = 0; i < maxRounds; i++) {
+        const textarea = document.createElement('textarea');
+        textarea.placeholder = `Notiz zu Runde ${i + 1}`;
+        textarea.id = `note-${i}`;
+        textarea.disabled = (i + 1 < currentRound); // Vergangene Notizen nicht bearbeitbar
+        container.appendChild(textarea);
+      }
+    }
+
+    function lockNotes() {
+      const output = document.getElementById('lockedNotes');
+      output.innerHTML = '';
+      for (let i = 0; i < maxRounds; i++) {
+        const text = document.getElementById(`note-${i}`)?.value || '';
+        const p = document.createElement('p');
+        p.className = 'locked-note';
+        p.textContent = `Runde ${i + 1}: ${text}`;
+        output.appendChild(p);
+      }
     }
 
     function checkSolution() {
@@ -249,12 +273,10 @@
 
     function restartGame() {
       currentRound = 0;
-      targetValue = 0;
-      startingPlayer = "";
-      answeringPlayer = "";
+      targetValue = Math.floor(Math.random() * 11);
       document.getElementById('resultScreen').style.backgroundColor = "white";
       document.getElementById('resultScreen').style.display = "none";
-      document.getElementById('startScreen').style.display = "block";
+      document.getElementById('whoStartsScreen').style.display = "block";
     }
   </script>
 </body>
