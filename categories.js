@@ -8,6 +8,7 @@ const categories = [
     "Nenne eine Ausrede, warum man zu spät zum Unterricht kommt",
     "Nenne einen Shampoo-Duft",
   "Nenne einen Fußball-Verein",
+  "Nenne einen Fanartikel aus dem Shop deines Lieblingsvereins",
   "Nenne ein Verhütungsmittel",
   "Nenne eine Sehenswürdigkeit",
   "Nenne eine Person, um mit dieser in den Urlaub zu fahren",
