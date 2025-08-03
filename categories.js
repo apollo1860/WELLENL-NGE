@@ -16,6 +16,7 @@ const categories = [
     "Nenne eine Uhrzeit, um zu frühstücken",
     "Nenne einen Firmenbenefit",
     "Nenne einen Kosenamen",
+    "Nenne ein Trikot mit einem Fußballer-Flock",
     "Nenne eine historische Persönlichkeit",
     "Nenne einen Sänger, der mit DJ beginnt",
     "Nenne einen Musiker, der Lil' im Namen hat",
