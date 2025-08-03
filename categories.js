@@ -1,6 +1,9 @@
 // Diese Datei enthält die Kategorien für das Spiel "Wellenlänge"
 const categories = [
     "Nenne eine Porno-Kategorie",
+    "Nenne ein Souvenir aus dem Urlaub",
+    "Nenne ein Mitbringsel für jemanden aus dem Urlaub",
+    "Nenne eine Art zu sterben",
     "Nenne eine Bestrafung in der Schule",
     "Nenne eine Ausrede, warum man seine Hausaufgaben vergessen hat",
     "Nenne einen Grund, warum man nicht für eine Prüfung gelernt hat",
