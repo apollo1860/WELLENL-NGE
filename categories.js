@@ -10,6 +10,7 @@ const categories = [
     "Nenne ein Geburtstagsgeschenk für deinen Partner oder Partnerin",
     "Nenne ein Land, in dem du noch nie Urlaub gemacht hast",
     "Nenne eine Tätigkeit im Büro",
+    "Nenne einen Nebencharakter eines Films oder Serie",
     "Nenne eine Stadt in Bayern",
     "Nenne ein Jahrzent, um darin zu leben",
     "Nenne ein Filmgrenre, um dieses im Kino beim ersten Date zu sehen",
