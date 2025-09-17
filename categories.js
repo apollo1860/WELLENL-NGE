@@ -5,6 +5,8 @@ const categories = [
     "Nenne eine Kinderserie aus den 90ern/2000ern",
     "Nenne eine Aktivität, die man während einer U-Bahn-Fahrt machen kann",
     "Nenne eine Joghurt-Sorte",
+    "Nenne ein Geburtstagsgeschenk für deinen Partner oder Partnerin",
+    "Nenne ein Land, in dem du noch nie Urlaub gemacht hast",
     "Nenne eine Tätigkeit im Büro",
     "Nenne eine Stadt in Bayern",
     "Nenne ein Jahrzent, um darin zu leben",
