@@ -228,7 +228,11 @@
 
     function shuffleCategory() {
       const index = Math.floor(Math.random() * categories.length);
-      document.getElementById('categoryDisplay').innerText = "Kategorie: " + categories[index];
+      let text = "Kategorie: " + categories[index];
+      if (categories[index].startsWith("Overrated/Underrated")) {
+        text += "\n(0 = underrated, 5 = genau richtig gerated, 10 = overrated)";
+      }
+      document.getElementById('categoryDisplay').innerText = text;
     }
 
     function showNotes() {
